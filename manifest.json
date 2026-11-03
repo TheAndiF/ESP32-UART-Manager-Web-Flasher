@@ -1,6 +1,6 @@
 {
   "name": "ESP32 UART Manager",
-  "version": "v0.40.013",
+  "version": "v0.40.014",
   "new_install_prompt_erase": false,
   "builds": [
     {
