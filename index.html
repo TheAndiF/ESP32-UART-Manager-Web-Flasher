@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ESP32 UART Manager v0.40.007 – USB Firmware installieren</title>
+  <title>ESP32 UART Manager v0.40.008 – USB Firmware installieren</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
   <style>
@@ -15,6 +15,15 @@
     .version small{color:#704e00;font-weight:600}
     .warn{background:#fff3d7;border-left:4px solid #dd9800;padding:14px;border-radius:5px}
     esp-web-install-button{display:block;margin:24px 0}
+    .guide{margin:24px 0;border:1px solid #cbd9e8;border-radius:12px;background:#f7fafe;padding:14px 18px}
+    .guide summary{font-weight:700;cursor:pointer;color:#153c60;font-size:18px}
+    .guide ol{margin:18px 0 8px;padding-left:24px}
+    .guide li{padding:0 0 18px 2px;margin-bottom:18px;border-bottom:1px solid #dce5ef}
+    .guide li:last-child{border:0;margin-bottom:0}
+    .guide figure{margin:12px 0 0}
+    .guide img{display:block;max-width:100%;height:auto;max-height:430px;object-fit:contain;object-position:left top;border:1px solid #d7dfe8;border-radius:8px;background:white}
+    .guide figcaption{font-size:13px;color:#4b5b6d;margin-top:5px}
+    .guide .note{background:#fff4d9;border-left:3px solid #d89b16;padding:10px;margin:12px 0}
     a{color:#1663b4}
   </style>
 </head>
@@ -22,7 +31,7 @@
 <main>
   <h1>ESP32 UART Manager</h1>
   <div class="version" aria-label="Version der zur Installation angebotenen Firmware">
-    <span>Firmware-Version:</span> <strong id="firmware-version">v0.40.007</strong>
+    <span>Firmware-Version:</span> <strong id="firmware-version">v0.40.008</strong>
     <small>Entwicklungsversion – nicht freigegeben</small>
   </div>
   <p>Die Firmware wird direkt aus dieser Webseite auf den angeschlossenen ESP32 übertragen. Eine lokale Entwicklungsumgebung ist nicht nötig.</p>
@@ -32,16 +41,50 @@
     <li>Auf <strong>Verbinden</strong> klicken, den seriellen Anschluss auswählen und die Installation bestätigen.</li>
   </ol>
   <p class="warn"><strong>Achtung:</strong> Das vollständige USB-Image schreibt auch Bootloader und Partitionstabelle. Dabei können bestehende Geräteeinstellungen verloren gehen. Vorher die Konfiguration sichern. Nur für den klassischen ESP32 (Board: nodemcu-32s), nicht ESP32-S3/C3.</p>
-  <esp-web-install-button manifest="manifest.json?v=0.40.007">
+  <esp-web-install-button manifest="manifest.json?v=0.40.008">
     <button slot="activate">ESP32 verbinden und Firmware installieren</button>
     <span slot="unsupported">Dein Browser unterstützt Web Serial nicht. Bitte Chrome oder Edge am Computer verwenden.</span>
   </esp-web-install-button>
+  <details class="guide" id="usb-anleitung">
+    <summary>Bebilderte Anleitung zur USB-Firmware-Aktualisierung</summary>
+    <p>Die folgenden Bilder zeigen einen tatsächlich durchgeführten Installationsablauf. Sie stammen von der älteren Firmware v0.40.006; die hier oben angebotene Versionsnummer kann daher abweichen. Die Schritte gelten für den unterstützten klassischen ESP32.</p>
+    <p class="note"><strong>Vorher sichern:</strong> Das vollständige Flash-Image löscht den Flash-Speicher. Dabei gehen gespeicherte Einstellungen wie WLAN-Zugangsdaten verloren. Nur fortfahren, wenn du das Gerät neu einrichten kannst.</p>
+    <ol>
+      <li><strong>ESP32 per USB verbinden und Port auswählen.</strong> Verbinde den ESP32 mit einem USB-Datenkabel, klicke oben auf „ESP32 verbinden und Firmware installieren“ und wähle den passenden seriellen Anschluss (hier beispielhaft CP2104 / COM6). Anschließend auf „Verbinden“ klicken.
+        <figure><img src="anleitung/schritt-01-port.png" alt="Browserdialog zur Auswahl eines seriellen Anschlusses, beispielhaft CP2104 auf COM6" loading="lazy"><figcaption>1. Den Anschluss zuerst markieren, dann „Verbinden“ auswählen.</figcaption></figure>
+      </li>
+      <li><strong>Installation starten.</strong> Im geöffneten ESP32-UART-Manager-Menü „Install ESP32 UART Manager“ auswählen.
+        <figure><img src="anleitung/schritt-02-installieren.png" alt="Menü mit Install ESP32 UART Manager und Logs und Console" loading="lazy"><figcaption>2. Installationspunkt auswählen.</figcaption></figure>
+      </li>
+      <li><strong>Löschwarnung bestätigen.</strong> Kontrolliere die angebotene Version. „All data on the device will be erased“ bedeutet, dass die bisherigen Flash-Daten gelöscht werden. Nur nach Sicherung auf „Install“ klicken.
+        <figure><img src="anleitung/schritt-03-bestaetigen.png" alt="Installationsbestätigung mit Hinweis dass alle Daten gelöscht werden" loading="lazy"><figcaption>3. Version prüfen und Löschvorgang ausdrücklich bestätigen.</figcaption></figure>
+      </li>
+      <li><strong>Löschen abwarten.</strong> Während „Erasing“ angezeigt wird, den ESP32 nicht abziehen.
+        <figure><img src="anleitung/schritt-04-loeschen.png" alt="Installationsdialog mit Status Erasing" loading="lazy"><figcaption>4. Flash-Speicher wird gelöscht.</figcaption></figure>
+      </li>
+      <li><strong>Firmware übertragen lassen.</strong> Der Fortschritt wird in Prozent dargestellt. Browserfenster sichtbar lassen, Computer nicht in den Ruhezustand versetzen und das USB-Kabel angeschlossen lassen.
+        <figure><img src="anleitung/schritt-05-uebertragen.png" alt="Installationsfortschritt in Prozent und Hinweis den Browser sichtbar zu lassen" loading="lazy"><figcaption>5. Übertragung läuft; die Dauer kann variieren.</figcaption></figure>
+      </li>
+      <li><strong>Abschluss abwarten.</strong> „Wrapping up“ bedeutet, dass der Installationsvorgang noch nicht beendet ist.
+        <figure><img src="anleitung/schritt-06-abschluss.png" alt="Installationsdialog mit Status Wrapping up" loading="lazy"><figcaption>6. Abschlussarbeiten laufen noch.</figcaption></figure>
+      </li>
+      <li><strong>Erfolgsmeldung prüfen.</strong> Erst bei „Installation complete!“ ist der Vorgang abgeschlossen. Mit „Next“ fortfahren.
+        <figure><img src="anleitung/schritt-07-erfolg.png" alt="Erfolgsmeldung Installation complete mit Next Schaltfläche" loading="lazy"><figcaption>7. Erfolgreich abgeschlossene Installation.</figcaption></figure>
+      </li>
+      <li><strong>Optional die serielle Konsole öffnen.</strong> Nach „Next“ im Menü „Logs &amp; Console“ wählen.
+        <figure><img src="anleitung/schritt-08-menue.png" alt="ESP32 UART Manager Menü nach Installation mit Logs und Console" loading="lazy"><figcaption>8. Das Diagnosemenü hilft bei der ersten Inbetriebnahme.</figcaption></figure>
+      </li>
+      <li><strong>Startmeldungen und Version kontrollieren.</strong> In der Konsole können die Startmeldungen, die Firmware-Version und die Netzwerkeinrichtung überprüft werden. Im Beispiel startet mangels WLAN-Zugangsdaten ein Fallback-Access-Point. Die angezeigte Version v0.40.006 stammt aus dem Beispiel und muss nicht der aktuell angebotenen Version entsprechen.
+        <figure><img src="anleitung/schritt-09-logs.png" alt="Serielle ESP32 Startmeldungen mit Firmware-Version und Fallback-Access-Point" loading="lazy"><figcaption>9. Beispiel für Startprotokoll und Diagnoseausgabe.</figcaption></figure>
+      </li>
+    </ol>
+  </details>
   <p>Bei Verbindungsproblemen andere Programme mit geöffnetem COM-Port schließen. Gegebenenfalls BOOT während des Verbindens gedrückt halten.</p>
   <p>Der Web-Flasher ist für eine öffentliche GitHub-Pages-Seite vorgesehen. Der Quellcode im privaten Repository wird dadurch nicht veröffentlicht; das angebotene Firmware-Image ist aber öffentlich herunterladbar.</p>
   <p>Entwicklungsfirmware: keine freigegebene Produktversion. Verwendung auf eigene Verantwortung.</p>
 </main>
 <script>
-  fetch('manifest.json?v=0.40.007', {cache:'no-store'})
+  fetch('manifest.json?v=0.40.008', {cache:'no-store'})
     .then(response => { if (!response.ok) throw new Error('Manifest nicht erreichbar'); return response.json(); })
     .then(manifest => {
       if (typeof manifest.version === 'string' && /^v\d+\.\d+\.\d+$/.test(manifest.version)) {
