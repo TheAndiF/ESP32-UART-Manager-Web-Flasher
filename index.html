@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ESP32 UART Manager v0.40.011 – Install USB Firmware</title>
+  <title>ESP32 UART Manager v0.40.012 – Install USB Firmware</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
   <style>
@@ -36,7 +36,7 @@
   <div class="topline"><nav class="language-switch" aria-label="Language / Sprache"><button id="lang-en" type="button" lang="en" aria-pressed="false">EN</button><button id="lang-de" type="button" lang="de" aria-pressed="false">DE</button></nav></div>
   <h1>ESP32 UART Manager</h1>
   <div class="version" aria-label="Version der zur Installation angebotenen Firmware" data-i18n-aria="versionAria">
-    <span data-i18n="versionLabel">Firmware-Version:</span> <strong id="firmware-version">v0.40.011</strong>
+    <span data-i18n="versionLabel">Firmware-Version:</span> <strong id="firmware-version">v0.40.012</strong>
     <small data-i18n="development">Entwicklungsversion – nicht freigegeben</small>
   </div>
   <p data-i18n="intro">Die Firmware wird direkt aus dieser Webseite auf den angeschlossenen ESP32 übertragen. Eine lokale Entwicklungsumgebung ist nicht nötig.</p>
@@ -152,7 +152,7 @@
   function setLanguage(language) {
     const texts = language === 'de' ? german : english;
     document.documentElement.lang = language;
-    document.title = language === 'de' ? 'ESP32 UART Manager v0.40.011 – USB Firmware installieren' : 'ESP32 UART Manager v0.40.011 – Install USB Firmware';
+    document.title = language === 'de' ? 'ESP32 UART Manager v0.40.012 – USB Firmware installieren' : 'ESP32 UART Manager v0.40.012 – Install USB Firmware';
     document.querySelectorAll('[data-i18n]').forEach(element => { element.textContent = texts[element.dataset.i18n]; });
     document.querySelectorAll('[data-i18n-alt]').forEach(element => { element.alt = texts[element.dataset.i18nAlt]; });
     document.querySelectorAll('[data-i18n-aria]').forEach(element => { element.setAttribute('aria-label', texts[element.dataset.i18nAria]); });
