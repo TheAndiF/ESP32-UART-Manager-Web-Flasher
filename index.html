@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ESP32 UART Manager v0.40.010 – Install USB Firmware</title>
+  <title>ESP32 UART Manager v0.40.011 – Install USB Firmware</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
   <style>
@@ -36,7 +36,7 @@
   <div class="topline"><nav class="language-switch" aria-label="Language / Sprache"><button id="lang-en" type="button" lang="en" aria-pressed="false">EN</button><button id="lang-de" type="button" lang="de" aria-pressed="false">DE</button></nav></div>
   <h1>ESP32 UART Manager</h1>
   <div class="version" aria-label="Version der zur Installation angebotenen Firmware" data-i18n-aria="versionAria">
-    <span data-i18n="versionLabel">Firmware-Version:</span> <strong id="firmware-version">v0.40.010</strong>
+    <span data-i18n="versionLabel">Firmware-Version:</span> <strong id="firmware-version">v0.40.011</strong>
     <small data-i18n="development">Entwicklungsversion – nicht freigegeben</small>
   </div>
   <p data-i18n="intro">Die Firmware wird direkt aus dieser Webseite auf den angeschlossenen ESP32 übertragen. Eine lokale Entwicklungsumgebung ist nicht nötig.</p>
@@ -46,7 +46,7 @@
     <li data-i18n="quick3">Auf Verbinden klicken, den seriellen Anschluss auswählen und die Installation bestätigen.</li>
   </ol>
   <p class="warn"><strong data-i18n="warningTitle">Achtung:</strong> <span data-i18n="warning">Das vollständige USB-Image schreibt auch Bootloader und Partitionstabelle. Dabei können bestehende Geräteeinstellungen verloren gehen. Vorher die Konfiguration sichern. Nur für den klassischen ESP32 (Board: nodemcu-32s), nicht ESP32-S3/C3.</span></p>
-  <esp-web-install-button manifest="manifest.json?v=0.40.010">
+  <esp-web-install-button manifest="manifest.json?v=0.40.011">
     <button slot="activate" data-i18n="installButton">ESP32 verbinden und Firmware installieren</button>
     <span slot="unsupported" data-i18n="unsupported">Dein Browser unterstützt Web Serial nicht. Bitte Chrome oder Edge am Computer verwenden.</span>
   </esp-web-install-button>
@@ -152,7 +152,7 @@
   function setLanguage(language) {
     const texts = language === 'de' ? german : english;
     document.documentElement.lang = language;
-    document.title = language === 'de' ? 'ESP32 UART Manager v0.40.010 – USB Firmware installieren' : 'ESP32 UART Manager v0.40.010 – Install USB Firmware';
+    document.title = language === 'de' ? 'ESP32 UART Manager v0.40.011 – USB Firmware installieren' : 'ESP32 UART Manager v0.40.011 – Install USB Firmware';
     document.querySelectorAll('[data-i18n]').forEach(element => { element.textContent = texts[element.dataset.i18n]; });
     document.querySelectorAll('[data-i18n-alt]').forEach(element => { element.alt = texts[element.dataset.i18nAlt]; });
     document.querySelectorAll('[data-i18n-aria]').forEach(element => { element.setAttribute('aria-label', texts[element.dataset.i18nAria]); });
@@ -165,7 +165,7 @@
   document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
   document.getElementById('lang-de').addEventListener('click', () => setLanguage('de'));
   setLanguage(initialLanguage);
-  fetch('manifest.json?v=0.40.010', {cache:'no-store'})
+  fetch('manifest.json?v=0.40.011', {cache:'no-store'})
     .then(response => { if (!response.ok) throw new Error('Manifest nicht erreichbar'); return response.json(); })
     .then(manifest => {
       if (typeof manifest.version === 'string' && /^v\d+\.\d+\.\d+$/.test(manifest.version)) {
