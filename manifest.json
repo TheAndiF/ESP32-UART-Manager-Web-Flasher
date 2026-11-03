@@ -1,0 +1,13 @@
+{
+  "name": "ESP32 UART Manager",
+  "version": "v0.40.004",
+  "new_install_prompt_erase": false,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "firmware/uart_esp32_full.bin", "offset": 0 }
+      ]
+    }
+  ]
+}
