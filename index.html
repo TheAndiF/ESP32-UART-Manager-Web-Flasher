@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ESP32 UART Manager v0.40.008 – USB Firmware installieren</title>
+  <title>ESP32 UART Manager v0.40.009 – Install USB Firmware</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
   <style>
@@ -25,66 +25,147 @@
     .guide figcaption{font-size:13px;color:#4b5b6d;margin-top:5px}
     .guide .note{background:#fff4d9;border-left:3px solid #d89b16;padding:10px;margin:12px 0}
     a{color:#1663b4}
+    .topline{display:flex;justify-content:flex-end;margin-bottom:12px}
+    .language-switch{display:flex;align-items:center;gap:6px}
+    .language-switch button{background:white;color:#1b2735;border:1px solid #becbd8;border-radius:7px;padding:5px 11px;cursor:pointer;font:inherit;font-size:13px}
+    .language-switch button[aria-pressed="true"]{background:#194f84;border-color:#194f84;color:#fff;font-weight:700}
   </style>
 </head>
 <body>
 <main>
+  <div class="topline"><nav class="language-switch" aria-label="Language / Sprache"><button id="lang-en" type="button" lang="en" aria-pressed="false">EN</button><button id="lang-de" type="button" lang="de" aria-pressed="false">DE</button></nav></div>
   <h1>ESP32 UART Manager</h1>
-  <div class="version" aria-label="Version der zur Installation angebotenen Firmware">
-    <span>Firmware-Version:</span> <strong id="firmware-version">v0.40.008</strong>
-    <small>Entwicklungsversion – nicht freigegeben</small>
+  <div class="version" aria-label="Version der zur Installation angebotenen Firmware" data-i18n-aria="versionAria">
+    <span data-i18n="versionLabel">Firmware-Version:</span> <strong id="firmware-version">v0.40.009</strong>
+    <small data-i18n="development">Entwicklungsversion – nicht freigegeben</small>
   </div>
-  <p>Die Firmware wird direkt aus dieser Webseite auf den angeschlossenen ESP32 übertragen. Eine lokale Entwicklungsumgebung ist nicht nötig.</p>
+  <p data-i18n="intro">Die Firmware wird direkt aus dieser Webseite auf den angeschlossenen ESP32 übertragen. Eine lokale Entwicklungsumgebung ist nicht nötig.</p>
   <ol>
-    <li>ESP32 mit einem Daten-USB-Kabel an den Computer anschließen.</li>
-    <li>Diese Seite in <strong>Chrome</strong> oder <strong>Edge</strong> auf dem Desktop öffnen.</li>
-    <li>Auf <strong>Verbinden</strong> klicken, den seriellen Anschluss auswählen und die Installation bestätigen.</li>
+    <li data-i18n="quick1">ESP32 mit einem Daten-USB-Kabel an den Computer anschließen.</li>
+    <li data-i18n="quick2">Diese Seite in Chrome oder Edge auf dem Desktop öffnen.</li>
+    <li data-i18n="quick3">Auf Verbinden klicken, den seriellen Anschluss auswählen und die Installation bestätigen.</li>
   </ol>
-  <p class="warn"><strong>Achtung:</strong> Das vollständige USB-Image schreibt auch Bootloader und Partitionstabelle. Dabei können bestehende Geräteeinstellungen verloren gehen. Vorher die Konfiguration sichern. Nur für den klassischen ESP32 (Board: nodemcu-32s), nicht ESP32-S3/C3.</p>
-  <esp-web-install-button manifest="manifest.json?v=0.40.008">
-    <button slot="activate">ESP32 verbinden und Firmware installieren</button>
-    <span slot="unsupported">Dein Browser unterstützt Web Serial nicht. Bitte Chrome oder Edge am Computer verwenden.</span>
+  <p class="warn"><strong data-i18n="warningTitle">Achtung:</strong> <span data-i18n="warning">Das vollständige USB-Image schreibt auch Bootloader und Partitionstabelle. Dabei können bestehende Geräteeinstellungen verloren gehen. Vorher die Konfiguration sichern. Nur für den klassischen ESP32 (Board: nodemcu-32s), nicht ESP32-S3/C3.</span></p>
+  <esp-web-install-button manifest="manifest.json?v=0.40.009">
+    <button slot="activate" data-i18n="installButton">ESP32 verbinden und Firmware installieren</button>
+    <span slot="unsupported" data-i18n="unsupported">Dein Browser unterstützt Web Serial nicht. Bitte Chrome oder Edge am Computer verwenden.</span>
   </esp-web-install-button>
   <details class="guide" id="usb-anleitung">
-    <summary>Bebilderte Anleitung zur USB-Firmware-Aktualisierung</summary>
-    <p>Die folgenden Bilder zeigen einen tatsächlich durchgeführten Installationsablauf. Sie stammen von der älteren Firmware v0.40.006; die hier oben angebotene Versionsnummer kann daher abweichen. Die Schritte gelten für den unterstützten klassischen ESP32.</p>
-    <p class="note"><strong>Vorher sichern:</strong> Das vollständige Flash-Image löscht den Flash-Speicher. Dabei gehen gespeicherte Einstellungen wie WLAN-Zugangsdaten verloren. Nur fortfahren, wenn du das Gerät neu einrichten kannst.</p>
+    <summary data-i18n="guideTitle">Bebilderte Anleitung zur USB-Firmware-Aktualisierung</summary>
+    <p data-i18n="guideIntro">Die folgenden Bilder zeigen einen tatsächlich durchgeführten Installationsablauf. Sie stammen von der älteren Firmware v0.40.006; die hier oben angebotene Versionsnummer kann daher abweichen. Die Schritte gelten für den unterstützten klassischen ESP32.</p>
+    <p class="note"><strong data-i18n="backupTitle">Vorher sichern:</strong> <span data-i18n="backupText">Das vollständige Flash-Image löscht den Flash-Speicher. Dabei gehen gespeicherte Einstellungen wie WLAN-Zugangsdaten verloren. Nur fortfahren, wenn du das Gerät neu einrichten kannst.</span></p>
     <ol>
-      <li><strong>ESP32 per USB verbinden und Port auswählen.</strong> Verbinde den ESP32 mit einem USB-Datenkabel, klicke oben auf „ESP32 verbinden und Firmware installieren“ und wähle den passenden seriellen Anschluss (hier beispielhaft CP2104 / COM6). Anschließend auf „Verbinden“ klicken.
-        <figure><img src="anleitung/schritt-01-port.png" alt="Browserdialog zur Auswahl eines seriellen Anschlusses, beispielhaft CP2104 auf COM6" loading="lazy"><figcaption>1. Den Anschluss zuerst markieren, dann „Verbinden“ auswählen.</figcaption></figure>
+      <li><strong data-i18n="step1Title">ESP32 per USB verbinden und Port auswählen.</strong> <span data-i18n="step1Text">Verbinde den ESP32 mit einem USB-Datenkabel, klicke oben auf „ESP32 verbinden und Firmware installieren“ und wähle den passenden seriellen Anschluss (hier beispielhaft CP2104 / COM6). Anschließend auf „Verbinden“ klicken.</span>
+        <figure><img src="anleitung/schritt-01-port.png" alt="Browserdialog zur Auswahl eines seriellen Anschlusses, beispielhaft CP2104 auf COM6" data-i18n-alt="step1Alt" loading="lazy"><figcaption data-i18n="step1Caption">1. Den Anschluss zuerst markieren, dann „Verbinden“ auswählen.</figcaption></figure>
       </li>
-      <li><strong>Installation starten.</strong> Im geöffneten ESP32-UART-Manager-Menü „Install ESP32 UART Manager“ auswählen.
-        <figure><img src="anleitung/schritt-02-installieren.png" alt="Menü mit Install ESP32 UART Manager und Logs und Console" loading="lazy"><figcaption>2. Installationspunkt auswählen.</figcaption></figure>
+      <li><strong data-i18n="step2Title">Installation starten.</strong> <span data-i18n="step2Text">Im geöffneten ESP32-UART-Manager-Menü „Install ESP32 UART Manager“ auswählen.</span>
+        <figure><img src="anleitung/schritt-02-installieren.png" alt="Menü mit Install ESP32 UART Manager und Logs und Console" data-i18n-alt="step2Alt" loading="lazy"><figcaption data-i18n="step2Caption">2. Installationspunkt auswählen.</figcaption></figure>
       </li>
-      <li><strong>Löschwarnung bestätigen.</strong> Kontrolliere die angebotene Version. „All data on the device will be erased“ bedeutet, dass die bisherigen Flash-Daten gelöscht werden. Nur nach Sicherung auf „Install“ klicken.
-        <figure><img src="anleitung/schritt-03-bestaetigen.png" alt="Installationsbestätigung mit Hinweis dass alle Daten gelöscht werden" loading="lazy"><figcaption>3. Version prüfen und Löschvorgang ausdrücklich bestätigen.</figcaption></figure>
+      <li><strong data-i18n="step3Title">Löschwarnung bestätigen.</strong> <span data-i18n="step3Text">Kontrolliere die angebotene Version. „All data on the device will be erased“ bedeutet, dass die bisherigen Flash-Daten gelöscht werden. Nur nach Sicherung auf „Install“ klicken.</span>
+        <figure><img src="anleitung/schritt-03-bestaetigen.png" alt="Installationsbestätigung mit Hinweis dass alle Daten gelöscht werden" data-i18n-alt="step3Alt" loading="lazy"><figcaption data-i18n="step3Caption">3. Version prüfen und Löschvorgang ausdrücklich bestätigen.</figcaption></figure>
       </li>
-      <li><strong>Löschen abwarten.</strong> Während „Erasing“ angezeigt wird, den ESP32 nicht abziehen.
-        <figure><img src="anleitung/schritt-04-loeschen.png" alt="Installationsdialog mit Status Erasing" loading="lazy"><figcaption>4. Flash-Speicher wird gelöscht.</figcaption></figure>
+      <li><strong data-i18n="step4Title">Löschen abwarten.</strong> <span data-i18n="step4Text">Während „Erasing“ angezeigt wird, den ESP32 nicht abziehen.</span>
+        <figure><img src="anleitung/schritt-04-loeschen.png" alt="Installationsdialog mit Status Erasing" data-i18n-alt="step4Alt" loading="lazy"><figcaption data-i18n="step4Caption">4. Flash-Speicher wird gelöscht.</figcaption></figure>
       </li>
-      <li><strong>Firmware übertragen lassen.</strong> Der Fortschritt wird in Prozent dargestellt. Browserfenster sichtbar lassen, Computer nicht in den Ruhezustand versetzen und das USB-Kabel angeschlossen lassen.
-        <figure><img src="anleitung/schritt-05-uebertragen.png" alt="Installationsfortschritt in Prozent und Hinweis den Browser sichtbar zu lassen" loading="lazy"><figcaption>5. Übertragung läuft; die Dauer kann variieren.</figcaption></figure>
+      <li><strong data-i18n="step5Title">Firmware übertragen lassen.</strong> <span data-i18n="step5Text">Der Fortschritt wird in Prozent dargestellt. Browserfenster sichtbar lassen, Computer nicht in den Ruhezustand versetzen und das USB-Kabel angeschlossen lassen.</span>
+        <figure><img src="anleitung/schritt-05-uebertragen.png" alt="Installationsfortschritt in Prozent und Hinweis den Browser sichtbar zu lassen" data-i18n-alt="step5Alt" loading="lazy"><figcaption data-i18n="step5Caption">5. Übertragung läuft; die Dauer kann variieren.</figcaption></figure>
       </li>
-      <li><strong>Abschluss abwarten.</strong> „Wrapping up“ bedeutet, dass der Installationsvorgang noch nicht beendet ist.
-        <figure><img src="anleitung/schritt-06-abschluss.png" alt="Installationsdialog mit Status Wrapping up" loading="lazy"><figcaption>6. Abschlussarbeiten laufen noch.</figcaption></figure>
+      <li><strong data-i18n="step6Title">Abschluss abwarten.</strong> <span data-i18n="step6Text">„Wrapping up“ bedeutet, dass der Installationsvorgang noch nicht beendet ist.</span>
+        <figure><img src="anleitung/schritt-06-abschluss.png" alt="Installationsdialog mit Status Wrapping up" data-i18n-alt="step6Alt" loading="lazy"><figcaption data-i18n="step6Caption">6. Abschlussarbeiten laufen noch.</figcaption></figure>
       </li>
-      <li><strong>Erfolgsmeldung prüfen.</strong> Erst bei „Installation complete!“ ist der Vorgang abgeschlossen. Mit „Next“ fortfahren.
-        <figure><img src="anleitung/schritt-07-erfolg.png" alt="Erfolgsmeldung Installation complete mit Next Schaltfläche" loading="lazy"><figcaption>7. Erfolgreich abgeschlossene Installation.</figcaption></figure>
+      <li><strong data-i18n="step7Title">Erfolgsmeldung prüfen.</strong> <span data-i18n="step7Text">Erst bei „Installation complete!“ ist der Vorgang abgeschlossen. Mit „Next“ fortfahren.</span>
+        <figure><img src="anleitung/schritt-07-erfolg.png" alt="Erfolgsmeldung Installation complete mit Next Schaltfläche" data-i18n-alt="step7Alt" loading="lazy"><figcaption data-i18n="step7Caption">7. Erfolgreich abgeschlossene Installation.</figcaption></figure>
       </li>
-      <li><strong>Optional die serielle Konsole öffnen.</strong> Nach „Next“ im Menü „Logs &amp; Console“ wählen.
-        <figure><img src="anleitung/schritt-08-menue.png" alt="ESP32 UART Manager Menü nach Installation mit Logs und Console" loading="lazy"><figcaption>8. Das Diagnosemenü hilft bei der ersten Inbetriebnahme.</figcaption></figure>
+      <li><strong data-i18n="step8Title">Optional die serielle Konsole öffnen.</strong> <span data-i18n="step8Text">Nach „Next“ im Menü „Logs &amp; Console“ wählen.</span>
+        <figure><img src="anleitung/schritt-08-menue.png" alt="ESP32 UART Manager Menü nach Installation mit Logs und Console" data-i18n-alt="step8Alt" loading="lazy"><figcaption data-i18n="step8Caption">8. Das Diagnosemenü hilft bei der ersten Inbetriebnahme.</figcaption></figure>
       </li>
-      <li><strong>Startmeldungen und Version kontrollieren.</strong> In der Konsole können die Startmeldungen, die Firmware-Version und die Netzwerkeinrichtung überprüft werden. Im Beispiel startet mangels WLAN-Zugangsdaten ein Fallback-Access-Point. Die angezeigte Version v0.40.006 stammt aus dem Beispiel und muss nicht der aktuell angebotenen Version entsprechen.
-        <figure><img src="anleitung/schritt-09-logs.png" alt="Serielle ESP32 Startmeldungen mit Firmware-Version und Fallback-Access-Point" loading="lazy"><figcaption>9. Beispiel für Startprotokoll und Diagnoseausgabe.</figcaption></figure>
+      <li><strong data-i18n="step9Title">Startmeldungen und Version kontrollieren.</strong> <span data-i18n="step9Text">In der Konsole können die Startmeldungen, die Firmware-Version und die Netzwerkeinrichtung überprüft werden. Im Beispiel startet mangels WLAN-Zugangsdaten ein Fallback-Access-Point. Die angezeigte Version v0.40.006 stammt aus dem Beispiel und muss nicht der aktuell angebotenen Version entsprechen.</span>
+        <figure><img src="anleitung/schritt-09-logs.png" alt="Serielle ESP32 Startmeldungen mit Firmware-Version und Fallback-Access-Point" data-i18n-alt="step9Alt" loading="lazy"><figcaption data-i18n="step9Caption">9. Beispiel für Startprotokoll und Diagnoseausgabe.</figcaption></figure>
       </li>
     </ol>
   </details>
-  <p>Bei Verbindungsproblemen andere Programme mit geöffnetem COM-Port schließen. Gegebenenfalls BOOT während des Verbindens gedrückt halten.</p>
-  <p>Der Web-Flasher ist für eine öffentliche GitHub-Pages-Seite vorgesehen. Der Quellcode im privaten Repository wird dadurch nicht veröffentlicht; das angebotene Firmware-Image ist aber öffentlich herunterladbar.</p>
-  <p>Entwicklungsfirmware: keine freigegebene Produktversion. Verwendung auf eigene Verantwortung.</p>
+  <p data-i18n="troubleshoot">Bei Verbindungsproblemen andere Programme mit geöffnetem COM-Port schließen. Gegebenenfalls BOOT während des Verbindens gedrückt halten.</p>
+  <p data-i18n="publicNotice">Der Web-Flasher ist für eine öffentliche GitHub-Pages-Seite vorgesehen. Der Quellcode im privaten Repository wird dadurch nicht veröffentlicht; das angebotene Firmware-Image ist aber öffentlich herunterladbar.</p>
+  <p data-i18n="disclaimer">Entwicklungsfirmware: keine freigegebene Produktversion. Verwendung auf eigene Verantwortung.</p>
 </main>
 <script>
-  fetch('manifest.json?v=0.40.008', {cache:'no-store'})
+  const english = {
+    versionAria: 'Firmware version offered for installation',
+    versionLabel: 'Firmware version:',
+    development: 'Development version – not officially released',
+    intro: 'Install firmware directly from this website onto an ESP32 connected by USB. No local development environment is required.',
+    quick1: 'Connect the ESP32 to your computer using a USB data cable.',
+    quick2: 'Open this page in Chrome or Edge on a desktop computer.',
+    quick3: 'Click Connect, select the serial port and confirm the installation.',
+    warningTitle: 'Warning:',
+    warning: 'The complete USB image also writes the bootloader and partition table. Existing device settings may be lost. Back up your configuration first. Supports only classic ESP32 boards (nodemcu-32s), not ESP32-S3/C3.',
+    installButton: 'Connect ESP32 and install firmware',
+    unsupported: 'Your browser does not support Web Serial. Please use Chrome or Edge on a desktop computer.',
+    guideTitle: 'Illustrated USB firmware installation guide',
+    guideIntro: 'These screenshots show a real installation process. They were captured with an older firmware version (v0.40.006), so the version offered above may differ. These steps apply to the supported classic ESP32.',
+    backupTitle: 'Back up first:',
+    backupText: 'The complete firmware image erases the flash memory. Saved settings, including Wi-Fi credentials, will be lost. Continue only if you can set up the device again.',
+    step1Title: 'Connect the ESP32 and select a port.',
+    step1Text: 'Connect the ESP32 with a USB data cable, click “Connect ESP32 and install firmware” above and select the correct serial port (CP2104 / COM6 in this example). Then click “Connect”.',
+    step1Alt: 'Browser serial port selection dialog showing a CP2104 device on COM6',
+    step1Caption: '1. Select the port first, then click Connect.',
+    step2Title: 'Start installation.',
+    step2Text: 'In the ESP32 UART Manager menu, select “Install ESP32 UART Manager”.',
+    step2Alt: 'ESP32 UART Manager menu with installation and logs options',
+    step2Caption: '2. Choose the installation option.',
+    step3Title: 'Confirm the erase warning.',
+    step3Text: 'Check the firmware version. “All data on the device will be erased” means the existing flash data will be deleted. Click “Install” only after backing up your settings.',
+    step3Alt: 'Installation confirmation warning that all device data will be erased',
+    step3Caption: '3. Check the version and explicitly confirm erasing.',
+    step4Title: 'Wait for erasing.',
+    step4Text: 'Do not disconnect the ESP32 while “Erasing” is displayed.',
+    step4Alt: 'Firmware installation dialog showing Erasing',
+    step4Caption: '4. The flash memory is being erased.',
+    step5Title: 'Wait for firmware transfer.',
+    step5Text: 'Progress is displayed as a percentage. Keep the browser page visible, prevent your computer from sleeping and leave the USB cable connected.',
+    step5Alt: 'Firmware installation progress and instruction to keep the page visible',
+    step5Caption: '5. Transfer in progress; duration may vary.',
+    step6Title: 'Wait for finalization.',
+    step6Text: '“Wrapping up” means the installation has not finished yet.',
+    step6Alt: 'Firmware installation dialog showing Wrapping up',
+    step6Caption: '6. Finalization is still in progress.',
+    step7Title: 'Check the success message.',
+    step7Text: 'Installation is finished only when “Installation complete!” appears. Select “Next” to continue.',
+    step7Alt: 'Installation complete message with a Next button',
+    step7Caption: '7. Installation completed successfully.',
+    step8Title: 'Optionally open the serial console.',
+    step8Text: 'After selecting “Next”, choose “Logs & Console” in the menu.',
+    step8Alt: 'ESP32 UART Manager menu with Logs and Console option',
+    step8Caption: '8. The diagnostics menu helps with initial setup.',
+    step9Title: 'Check startup messages and firmware version.',
+    step9Text: 'The serial console shows startup messages, the firmware version and network setup. In this example, a fallback access point starts because Wi-Fi credentials are missing. The v0.40.006 version shown is from the example and may differ from the firmware currently offered.',
+    step9Alt: 'ESP32 serial startup messages showing firmware version and fallback access point',
+    step9Caption: '9. Example startup log and diagnostic output.',
+    troubleshoot: 'If connection fails, close other programs using the COM port. If needed, hold the BOOT button while connecting.',
+    publicNotice: 'This web flasher is hosted on public GitHub Pages. The main source repository remains private, but the firmware image offered here can be downloaded publicly.',
+    disclaimer: 'Development firmware, not an officially released product. Use at your own risk.'
+  };
+  const german = {};
+  document.querySelectorAll('[data-i18n]').forEach(element => { german[element.dataset.i18n] = element.textContent; });
+  document.querySelectorAll('[data-i18n-alt]').forEach(element => { german[element.dataset.i18nAlt] = element.alt; });
+  document.querySelectorAll('[data-i18n-aria]').forEach(element => { german[element.dataset.i18nAria] = element.getAttribute('aria-label'); });
+  function setLanguage(language) {
+    const texts = language === 'de' ? german : english;
+    document.documentElement.lang = language;
+    document.title = language === 'de' ? 'ESP32 UART Manager v0.40.009 – USB Firmware installieren' : 'ESP32 UART Manager v0.40.009 – Install USB Firmware';
+    document.querySelectorAll('[data-i18n]').forEach(element => { element.textContent = texts[element.dataset.i18n]; });
+    document.querySelectorAll('[data-i18n-alt]').forEach(element => { element.alt = texts[element.dataset.i18nAlt]; });
+    document.querySelectorAll('[data-i18n-aria]').forEach(element => { element.setAttribute('aria-label', texts[element.dataset.i18nAria]); });
+    document.getElementById('lang-en').setAttribute('aria-pressed', String(language === 'en'));
+    document.getElementById('lang-de').setAttribute('aria-pressed', String(language === 'de'));
+    try { localStorage.setItem('esp32-uart-flasher-language', language); } catch (_) { /* Browser storage may be disabled. */ }
+  }
+  let initialLanguage = /^de\b/i.test(navigator.language || '') ? 'de' : 'en';
+  try { const saved = localStorage.getItem('esp32-uart-flasher-language'); if (saved === 'de' || saved === 'en') initialLanguage = saved; } catch (_) {}
+  document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+  document.getElementById('lang-de').addEventListener('click', () => setLanguage('de'));
+  setLanguage(initialLanguage);
+  fetch('manifest.json?v=0.40.009', {cache:'no-store'})
     .then(response => { if (!response.ok) throw new Error('Manifest nicht erreichbar'); return response.json(); })
     .then(manifest => {
       if (typeof manifest.version === 'string' && /^v\d+\.\d+\.\d+$/.test(manifest.version)) {
