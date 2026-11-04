@@ -24,11 +24,6 @@
     .guide img{display:block;max-width:100%;height:auto;max-height:430px;object-fit:contain;object-position:left top;border:1px solid #d7dfe8;border-radius:8px;background:white}
     .guide figcaption{font-size:13px;color:#4b5b6d;margin-top:5px}
     .guide .note{background:#fff4d9;border-left:3px solid #d89b16;padding:10px;margin:12px 0}
-    .guide-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 0}
-    .guide-tabs button{flex:1;min-width:190px;border:1px solid #bbcede;background:#f7fafe;color:#153c60;border-radius:9px;padding:12px;cursor:pointer;font:inherit;font-weight:700}
-    .guide-tabs button[aria-selected="true"]{background:#194f84;color:white;border-color:#194f84}
-    .guide-panel[hidden]{display:none}
-    .guide-panel{margin-top:12px}
     .guide code{background:#e9eef5;border-radius:4px;padding:2px 5px}
     a{color:#1663b4}
     .topline{display:flex;justify-content:flex-end;margin-bottom:12px}
@@ -56,12 +51,8 @@
     <button slot="activate" data-i18n="installButton">ESP32 verbinden und Firmware installieren</button>
     <span slot="unsupported" data-i18n="unsupported">Dein Browser unterstützt Web Serial nicht. Bitte Chrome oder Edge am Computer verwenden.</span>
   </esp-web-install-button>
-  <nav class="guide-tabs" aria-label="Guides / Anleitungen" data-i18n-aria="guideTabsAria">
-    <button type="button" id="tab-install" role="tab" aria-controls="usb-anleitung" aria-selected="true" data-i18n="tabInstall">Firmware installieren</button>
-    <button type="button" id="tab-wifi" role="tab" aria-controls="wifi-anleitung" aria-selected="false" data-i18n="tabWifi">WLAN einrichten</button>
-  </nav>
-  <section class="guide guide-panel" id="usb-anleitung" role="tabpanel" aria-labelledby="tab-install">
-    <h2 data-i18n="guideTitle">Bebilderte Anleitung zur USB-Firmware-Aktualisierung</h2>
+  <details class="guide" id="usb-anleitung">
+    <summary data-i18n="guideTitle">Bebilderte Anleitung zur USB-Firmware-Aktualisierung</summary>
     <p data-i18n="guideIntro">Die folgenden Bilder zeigen einen tatsächlich durchgeführten Installationsablauf. Sie stammen von der älteren Firmware v0.40.006; die hier oben angebotene Versionsnummer kann daher abweichen. Die Schritte gelten für den unterstützten klassischen ESP32.</p>
     <p class="note"><strong data-i18n="backupTitle">Vorher sichern:</strong> <span data-i18n="backupText">Das vollständige Flash-Image löscht den Flash-Speicher. Dabei gehen gespeicherte Einstellungen wie WLAN-Zugangsdaten verloren. Nur fortfahren, wenn du das Gerät neu einrichten kannst.</span></p>
     <ol>
@@ -93,9 +84,9 @@
         <figure><img src="anleitung/schritt-09-logs.png" alt="Serielle ESP32 Startmeldungen mit Firmware-Version und Fallback-Access-Point" data-i18n-alt="step9Alt" loading="lazy"><figcaption data-i18n="step9Caption">9. Beispiel für Startprotokoll und Diagnoseausgabe.</figcaption></figure>
       </li>
     </ol>
-  </section>
-  <section class="guide guide-panel" id="wifi-anleitung" role="tabpanel" aria-labelledby="tab-wifi" hidden>
-    <h2 data-i18n="wifiGuideTitle">WLAN über die USB-Konsole einrichten</h2>
+  </details>
+  <details class="guide" id="wifi-anleitung">
+    <summary data-i18n="wifiGuideTitle">WLAN über die USB-Konsole einrichten</summary>
     <p data-i18n="wifiGuideIntro">Nach dem Flashen kannst du die WLAN-Zugangsdaten direkt über die serielle Konsole eingeben. Dazu ist keine zusätzliche Software nötig. Die Bilder zeigen Firmware v0.40.016 und verwenden anonymisierte Beispielnetzwerke.</p>
     <p class="note"><strong data-i18n="wifiPrivacyTitle">Passwort schützen:</strong> <span data-i18n="wifiPrivacy">Die Konsole kann Eingaben lokal anzeigen. Verwende für Screenshots nur Beispieldaten und veröffentliche niemals echte WLAN-Passwörter oder vollständige Konsolenprotokolle mit Zugangsdaten.</span></p>
     <ol>
@@ -121,16 +112,13 @@
         <figure><img src="anleitung/wlan-07-neustart.png" alt="ESP32 restart and Wi-Fi connection attempt" data-i18n-alt="wifi7Alt" loading="lazy"><figcaption data-i18n="wifi7Caption">7. Gespeicherte SSID und beginnender WLAN-Verbindungsversuch.</figcaption></figure>
       </li>
     </ol>
-  </section>
+  </details>
   <p data-i18n="troubleshoot">Bei Verbindungsproblemen andere Programme mit geöffnetem COM-Port schließen. Gegebenenfalls BOOT während des Verbindens gedrückt halten.</p>
   <p data-i18n="publicNotice">Der Web-Flasher ist für eine öffentliche GitHub-Pages-Seite vorgesehen. Der Quellcode im privaten Repository wird dadurch nicht veröffentlicht; das angebotene Firmware-Image ist aber öffentlich herunterladbar.</p>
   <p data-i18n="disclaimer">Entwicklungsfirmware: keine freigegebene Produktversion. Verwendung auf eigene Verantwortung.</p>
 </main>
 <script>
   const english = {
-    guideTabsAria: 'Installation and Wi-Fi setup guides',
-    tabInstall: 'Install firmware',
-    tabWifi: 'Set up Wi-Fi',
     wifiGuideTitle: 'Set up Wi-Fi through the USB console',
     wifiGuideIntro: 'After flashing, enter Wi-Fi credentials directly in the serial console. No additional software is needed. The screenshots show firmware v0.40.016 with anonymized example network names.',
     wifiPrivacyTitle: 'Protect your password:',
@@ -237,15 +225,6 @@
   try { const saved = localStorage.getItem('esp32-uart-flasher-language'); if (saved === 'de' || saved === 'en') initialLanguage = saved; } catch (_) {}
   document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
   document.getElementById('lang-de').addEventListener('click', () => setLanguage('de'));
-  function showGuide(name) {
-    const install = name === 'install';
-    document.getElementById('usb-anleitung').hidden = !install;
-    document.getElementById('wifi-anleitung').hidden = install;
-    document.getElementById('tab-install').setAttribute('aria-selected', String(install));
-    document.getElementById('tab-wifi').setAttribute('aria-selected', String(!install));
-  }
-  document.getElementById('tab-install').addEventListener('click', () => showGuide('install'));
-  document.getElementById('tab-wifi').addEventListener('click', () => showGuide('wifi'));
   setLanguage(initialLanguage);
   fetch('manifest.json?v=0.40.011', {cache:'no-store'})
     .then(response => { if (!response.ok) throw new Error('Manifest nicht erreichbar'); return response.json(); })
