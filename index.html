@@ -24,6 +24,12 @@
     .guide img{display:block;max-width:100%;height:auto;max-height:430px;object-fit:contain;object-position:left top;border:1px solid #d7dfe8;border-radius:8px;background:white}
     .guide figcaption{font-size:13px;color:#4b5b6d;margin-top:5px}
     .guide .note{background:#fff4d9;border-left:3px solid #d89b16;padding:10px;margin:12px 0}
+    .guide-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 0}
+    .guide-tabs button{flex:1;min-width:190px;border:1px solid #bbcede;background:#f7fafe;color:#153c60;border-radius:9px;padding:12px;cursor:pointer;font:inherit;font-weight:700}
+    .guide-tabs button[aria-selected="true"]{background:#194f84;color:white;border-color:#194f84}
+    .guide-panel[hidden]{display:none}
+    .guide-panel{margin-top:12px}
+    .guide code{background:#e9eef5;border-radius:4px;padding:2px 5px}
     a{color:#1663b4}
     .topline{display:flex;justify-content:flex-end;margin-bottom:12px}
     .language-switch{display:flex;align-items:center;gap:6px}
@@ -50,8 +56,12 @@
     <button slot="activate" data-i18n="installButton">ESP32 verbinden und Firmware installieren</button>
     <span slot="unsupported" data-i18n="unsupported">Dein Browser unterstützt Web Serial nicht. Bitte Chrome oder Edge am Computer verwenden.</span>
   </esp-web-install-button>
-  <details class="guide" id="usb-anleitung">
-    <summary data-i18n="guideTitle">Bebilderte Anleitung zur USB-Firmware-Aktualisierung</summary>
+  <nav class="guide-tabs" aria-label="Guides / Anleitungen" data-i18n-aria="guideTabsAria">
+    <button type="button" id="tab-install" role="tab" aria-controls="usb-anleitung" aria-selected="true" data-i18n="tabInstall">Firmware installieren</button>
+    <button type="button" id="tab-wifi" role="tab" aria-controls="wifi-anleitung" aria-selected="false" data-i18n="tabWifi">WLAN einrichten</button>
+  </nav>
+  <section class="guide guide-panel" id="usb-anleitung" role="tabpanel" aria-labelledby="tab-install">
+    <h2 data-i18n="guideTitle">Bebilderte Anleitung zur USB-Firmware-Aktualisierung</h2>
     <p data-i18n="guideIntro">Die folgenden Bilder zeigen einen tatsächlich durchgeführten Installationsablauf. Sie stammen von der älteren Firmware v0.40.006; die hier oben angebotene Versionsnummer kann daher abweichen. Die Schritte gelten für den unterstützten klassischen ESP32.</p>
     <p class="note"><strong data-i18n="backupTitle">Vorher sichern:</strong> <span data-i18n="backupText">Das vollständige Flash-Image löscht den Flash-Speicher. Dabei gehen gespeicherte Einstellungen wie WLAN-Zugangsdaten verloren. Nur fortfahren, wenn du das Gerät neu einrichten kannst.</span></p>
     <ol>
@@ -83,13 +93,76 @@
         <figure><img src="anleitung/schritt-09-logs.png" alt="Serielle ESP32 Startmeldungen mit Firmware-Version und Fallback-Access-Point" data-i18n-alt="step9Alt" loading="lazy"><figcaption data-i18n="step9Caption">9. Beispiel für Startprotokoll und Diagnoseausgabe.</figcaption></figure>
       </li>
     </ol>
-  </details>
+  </section>
+  <section class="guide guide-panel" id="wifi-anleitung" role="tabpanel" aria-labelledby="tab-wifi" hidden>
+    <h2 data-i18n="wifiGuideTitle">WLAN über die USB-Konsole einrichten</h2>
+    <p data-i18n="wifiGuideIntro">Nach dem Flashen kannst du die WLAN-Zugangsdaten direkt über die serielle Konsole eingeben. Dazu ist keine zusätzliche Software nötig. Die Bilder zeigen Firmware v0.40.016 und verwenden anonymisierte Beispielnetzwerke.</p>
+    <p class="note"><strong data-i18n="wifiPrivacyTitle">Passwort schützen:</strong> <span data-i18n="wifiPrivacy">Die Konsole kann Eingaben lokal anzeigen. Verwende für Screenshots nur Beispieldaten und veröffentliche niemals echte WLAN-Passwörter oder vollständige Konsolenprotokolle mit Zugangsdaten.</span></p>
+    <ol>
+      <li><strong data-i18n="wifi1Title">USB-Konsole öffnen.</strong> <span data-i18n="wifi1Text">Nach der Firmwareinstallation „Logs &amp; Console“ öffnen. Kontrolliere die Startmeldungen und die angezeigte Firmware-Version.</span>
+        <figure><img src="anleitung/wlan-01-start.png" alt="ESP32 startup messages in the serial console" data-i18n-alt="wifi1Alt" loading="lazy"><figcaption data-i18n="wifi1Caption">1. Startmeldungen in der seriellen Konsole.</figcaption></figure>
+      </li>
+      <li><strong data-i18n="wifi2Title">WLAN-Suche starten.</strong> <span data-i18n="wifi2Text">Unten in der Konsole <code>wifi scan</code> eingeben und Enter drücken.</span>
+        <figure><img src="anleitung/wlan-02-scan-befehl.png" alt="wifi scan command entered in the console" data-i18n-alt="wifi2Alt" loading="lazy"><figcaption data-i18n="wifi2Caption">2. Suche mit wifi scan auslösen.</figcaption></figure>
+      </li>
+      <li><strong data-i18n="wifi3Title">Netzwerk auswählen.</strong> <span data-i18n="wifi3Text">Die gefundenen Netzwerke prüfen. Hier heißen die anonymisierten Beispielnetze testwlan01 und testwlan02. Mehrere Einträge desselben Netzes sind möglich.</span>
+        <figure><img src="anleitung/wlan-03-netze.png" alt="List of Wi-Fi networks testwlan01 and testwlan02" data-i18n-alt="wifi3Alt" loading="lazy"><figcaption data-i18n="wifi3Caption">3. WLAN-Suchergebnisse mit Signalstärke.</figcaption></figure>
+      </li>
+      <li><strong data-i18n="wifi4Title">Einrichtung starten.</strong> <span data-i18n="wifi4Text">Den Befehl <code>wifi setup</code> eingeben und mit Enter bestätigen. Sobald der ESP32 danach fragt, den gewünschten WLAN-Namen (SSID) eingeben.</span>
+        <figure><img src="anleitung/wlan-04-setup.png" alt="wifi setup command and SSID prompt" data-i18n-alt="wifi4Alt" loading="lazy"><figcaption data-i18n="wifi4Caption">4. WLAN-Einrichtungsdialog starten.</figcaption></figure>
+      </li>
+      <li><strong data-i18n="wifi5Title">Passwort eingeben.</strong> <span data-i18n="wifi5Text">Das Passwort des gewählten WLANs direkt als normalen Text eingeben und mit Enter bestätigen. Eine Base64-Umwandlung ist hier nicht nötig. Ein leeres Passwort ist nur für offene Netzwerke gedacht.</span>
+        <figure><img src="anleitung/wlan-05-passwort.png" alt="Password prompt and warning about visible input" data-i18n-alt="wifi5Alt" loading="lazy"><figcaption data-i18n="wifi5Caption">5. Passwortabfrage; kein echtes Passwort im Bild.</figcaption></figure>
+      </li>
+      <li><strong data-i18n="wifi6Title">Speichern bestätigen.</strong> <span data-i18n="wifi6Text">Die angezeigte SSID kontrollieren. Die Frage „Zugangsdaten speichern und neu starten? (J/N)“ mit J und Enter bestätigen.</span>
+        <figure><img src="anleitung/wlan-06-bestaetigen.png" alt="SSID and save confirmation prompt" data-i18n-alt="wifi6Alt" loading="lazy"><figcaption data-i18n="wifi6Caption">6. WLAN-Daten vor dem Neustart bestätigen.</figcaption></figure>
+      </li>
+      <li><strong data-i18n="wifi7Title">Neustart und Verbindung kontrollieren.</strong> <span data-i18n="wifi7Text">Der ESP32 speichert die Daten und startet neu. Der gezeigte Screenshot belegt den gespeicherten Netzwerknamen und den Beginn eines Verbindungsversuchs – noch nicht die erfolgreiche Verbindung. Warte auf eine Erfolgsmeldung und eine lokale IP-Adresse; öffne danach diese IP-Adresse im Browser.</span>
+        <figure><img src="anleitung/wlan-07-neustart.png" alt="ESP32 restart and Wi-Fi connection attempt" data-i18n-alt="wifi7Alt" loading="lazy"><figcaption data-i18n="wifi7Caption">7. Gespeicherte SSID und beginnender WLAN-Verbindungsversuch.</figcaption></figure>
+      </li>
+    </ol>
+  </section>
   <p data-i18n="troubleshoot">Bei Verbindungsproblemen andere Programme mit geöffnetem COM-Port schließen. Gegebenenfalls BOOT während des Verbindens gedrückt halten.</p>
   <p data-i18n="publicNotice">Der Web-Flasher ist für eine öffentliche GitHub-Pages-Seite vorgesehen. Der Quellcode im privaten Repository wird dadurch nicht veröffentlicht; das angebotene Firmware-Image ist aber öffentlich herunterladbar.</p>
   <p data-i18n="disclaimer">Entwicklungsfirmware: keine freigegebene Produktversion. Verwendung auf eigene Verantwortung.</p>
 </main>
 <script>
   const english = {
+    guideTabsAria: 'Installation and Wi-Fi setup guides',
+    tabInstall: 'Install firmware',
+    tabWifi: 'Set up Wi-Fi',
+    wifiGuideTitle: 'Set up Wi-Fi through the USB console',
+    wifiGuideIntro: 'After flashing, enter Wi-Fi credentials directly in the serial console. No additional software is needed. The screenshots show firmware v0.40.016 with anonymized example network names.',
+    wifiPrivacyTitle: 'Protect your password:',
+    wifiPrivacy: 'The terminal may display typed input locally. Use sample data for screenshots, and never publish real Wi-Fi passwords or full console logs containing credentials.',
+    wifi1Title: 'Open the USB console.',
+    wifi1Text: 'After installing the firmware, open “Logs & Console”. Check the startup messages and firmware version.',
+    wifi1Alt: 'ESP32 startup messages in the serial console',
+    wifi1Caption: '1. Startup messages in the serial console.',
+    wifi2Title: 'Scan for Wi-Fi networks.',
+    wifi2Text: 'Enter wifi scan at the bottom of the console and press Enter.',
+    wifi2Alt: 'wifi scan command entered in the console',
+    wifi2Caption: '2. Start a scan with wifi scan.',
+    wifi3Title: 'Choose a network.',
+    wifi3Text: 'Review the available networks. The anonymized examples here are testwlan01 and testwlan02. A network may appear more than once.',
+    wifi3Alt: 'List of Wi-Fi networks testwlan01 and testwlan02',
+    wifi3Caption: '3. Scan results with signal strength.',
+    wifi4Title: 'Start setup.',
+    wifi4Text: 'Enter wifi setup and press Enter. When prompted, type the Wi-Fi network name (SSID).',
+    wifi4Alt: 'wifi setup command and SSID prompt',
+    wifi4Caption: '4. Start the interactive Wi-Fi setup.',
+    wifi5Title: 'Enter the password.',
+    wifi5Text: 'Type your Wi-Fi password as plain text and press Enter. No Base64 conversion is needed. Leave the password blank only for an open network.',
+    wifi5Alt: 'Password prompt and warning about visible input',
+    wifi5Caption: '5. Password prompt, with no real password shown.',
+    wifi6Title: 'Confirm and save.',
+    wifi6Text: 'Verify the displayed SSID. Answer the “Save credentials and restart? (J/N)” prompt with J and Enter.',
+    wifi6Alt: 'SSID and save confirmation prompt',
+    wifi6Caption: '6. Confirm the Wi-Fi credentials before restarting.',
+    wifi7Title: 'Check the restart and connection.',
+    wifi7Text: 'The ESP32 saves the credentials and restarts. The screenshot confirms the stored SSID and the start of a connection attempt, not a successful connection yet. Wait for a success message and local IP address, then open that address in your browser.',
+    wifi7Alt: 'ESP32 restart and Wi-Fi connection attempt',
+    wifi7Caption: '7. Saved SSID and the start of a Wi-Fi connection attempt.',
     versionAria: 'Firmware version offered for installation',
     versionLabel: 'Firmware version:',
     development: 'Development version – not officially released',
@@ -164,6 +237,15 @@
   try { const saved = localStorage.getItem('esp32-uart-flasher-language'); if (saved === 'de' || saved === 'en') initialLanguage = saved; } catch (_) {}
   document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
   document.getElementById('lang-de').addEventListener('click', () => setLanguage('de'));
+  function showGuide(name) {
+    const install = name === 'install';
+    document.getElementById('usb-anleitung').hidden = !install;
+    document.getElementById('wifi-anleitung').hidden = install;
+    document.getElementById('tab-install').setAttribute('aria-selected', String(install));
+    document.getElementById('tab-wifi').setAttribute('aria-selected', String(!install));
+  }
+  document.getElementById('tab-install').addEventListener('click', () => showGuide('install'));
+  document.getElementById('tab-wifi').addEventListener('click', () => showGuide('wifi'));
   setLanguage(initialLanguage);
   fetch('manifest.json?v=0.40.011', {cache:'no-store'})
     .then(response => { if (!response.ok) throw new Error('Manifest nicht erreichbar'); return response.json(); })
